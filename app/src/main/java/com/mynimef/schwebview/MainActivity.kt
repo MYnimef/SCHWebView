@@ -36,7 +36,7 @@ class MainActivity: AppCompatActivity(R.layout.activity_main) {
                         view.context.startActivity(intent)
                     }
                 } else if (url.contains("yandex.ru/pogoda")) {
-                    val uri = Uri.parse("yandexpogoda://$url")
+                    val uri = Uri.parse("yandexweather://$url")
                     try {
                         val intent = Intent(Intent.ACTION_VIEW, uri)
                         view.context.startActivity(intent)
