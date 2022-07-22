@@ -2,6 +2,7 @@ package com.mynimef.schwebview
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.webkit.*
 import androidx.appcompat.app.AlertDialog
@@ -25,9 +26,24 @@ class MainActivity: AppCompatActivity(R.layout.activity_main) {
                 request: WebResourceRequest
             ): Boolean {
                 val url = request.url.toString()
-                if (url.contains("yandex.ru/maps") || url.contains("yandex.ru/pogoda")) {
-                    val intent = Intent(Intent.ACTION_VIEW, request.url)
-                    view.context.startActivity(intent)
+                if (url.contains("yandex.ru/maps")) {
+                    val uri = Uri.parse("yandexmaps://$url")
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW, uri)
+                        view.context.startActivity(intent)
+                    } catch (exc: Exception) {
+                        val intent = Intent(Intent.ACTION_VIEW, request.url)
+                        view.context.startActivity(intent)
+                    }
+                } else if (url.contains("yandex.ru/pogoda")) {
+                    val uri = Uri.parse("yandexpogoda://$url")
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW, uri)
+                        view.context.startActivity(intent)
+                    } catch (exc: Exception) {
+                        val intent = Intent(Intent.ACTION_VIEW, request.url)
+                        view.context.startActivity(intent)
+                    }
                 } else {
                     view.loadUrl(url)
                 }
